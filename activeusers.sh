@@ -1,6 +1,6 @@
 #/bin/sh
 
-USERS=$(ps -ef | tail -n +2 | awk '{print $1}' | sort | uniq)
+USERS=$(ps --no-headers -eo user | sort | uniq)
 
 if [ "$1" = '-a' ] || [ "$1" = '--all' ]; then
     MIN_ID=0
@@ -12,11 +12,9 @@ else
 fi
 
 for user in $USERS; do
-    id=$(id -u $user 2> /dev/null)
+    id=$(id -u $user)
 
-    if [ $? -eq 0 ]; then
-        if [ $id -ge $MIN_ID ]; then
-           echo $user
-        fi
+    if [ $id -ge $MIN_ID ]; then
+        echo $user
     fi
 done
