@@ -1,4 +1,5 @@
 #/bin/sh
+
 USERS=$(ps -ef | tail -n +2 | awk '{print $1}' | sort | uniq)
 
 if [ "$1" = '-a' ] || [ "$1" = '--all' ]; then
